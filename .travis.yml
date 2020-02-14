@@ -1,5 +1,7 @@
 language: php
 dist: xenial
+os: linux
+arch: s390x
 
 addons:
   apt:
