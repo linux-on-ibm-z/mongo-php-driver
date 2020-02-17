@@ -108,18 +108,14 @@ jobs:
       - stage: Test
         php: 7.3
         env:
-          - CONFIGURE_OPTS="--with-mongodb-client-side-encryption=no"
-		
+          - CONFIGURE_OPTS="--with-mongodb-client-side-encryption=no"		
       - stage: Smoke Testing
         php: 7.3
-
       # Test remaining PHP versions
       - stage: Test
         php: 7.2
       - stage: Test
         php: 7.4
-
-
     # Test with different configure options
     - stage: Test
       php: 7.3
