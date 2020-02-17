@@ -15,6 +15,12 @@ env:
     - SERVER_VERSION=4.2.0
     - DEPLOYMENT=STANDALONE
 
+linux-s390x: &linux-s390x
+  os: linux
+  arch: s390x
+  dist: bionic
+  env:  SERVER_DISTRO=ubuntu1804 SERVER_VERSION=4.2.3
+
 jobs:
   include:
 
@@ -100,27 +106,16 @@ jobs:
       env:
         - SERVER_VERSION=4.0.12
 
-    # Test with different configure options on s390x
-    - os: linux
-    - arch: s390x
-    - dist: bionic
-    - env:  SERVER_DISTRO=ubuntu1804 SERVER_VERSION=4.2.3
-      - stage: Test
-        php: 7.3
-        env:
-          - CONFIGURE_OPTS="--with-mongodb-client-side-encryption=no"		
-      - stage: Smoke Testing
-        php: 7.3
-      # Test remaining PHP versions
-      - stage: Test
-        php: 7.2
-      - stage: Test
-        php: 7.4
     # Test with different configure options
     - stage: Test
       php: 7.3
       env:
-        - CONFIGURE_OPTS="--with-mongodb-client-side-encryption=no"    
+        - CONFIGURE_OPTS="--with-mongodb-client-side-encryption=no"
+        
+
+    - stage: Smoke Testing
+      php: 7.3
+      <<: *linux-s390x
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_b354efda2943_key -iv $encrypted_b354efda2943_iv -in .travis.scripts/atlas-uris.txt.enc -out .travis.scripts/atlas-uris.txt -d || true
