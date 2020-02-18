@@ -19,7 +19,9 @@ linux-s390x: &linux-s390x
   os: linux
   arch: s390x
   dist: bionic
-  env:  SERVER_DISTRO=ubuntu1804 SERVER_VERSION=4.2.3
+  env: &env_s390x
+    - SERVER_DISTRO=ubuntu1804
+    - SERVER_VERSION=4.2.3
 
 jobs:
   include:
@@ -130,42 +132,50 @@ jobs:
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - TESTS=tests/atlas.phpt
         - TEST_PHP_ARGS="-q -s output.txt -x --show-diff"
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=STANDALONE_SSL
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=SHARDED_CLUSTER
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=SHARDED_CLUSTER_RS
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=STANDALONE_AUTH
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=REPLICASET
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=REPLICASET_SINGLE
     - stage: Test
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - DEPLOYMENT=REPLICASET_AUTH
         
     # Test with different configure options on s390x
@@ -173,6 +183,7 @@ jobs:
       php: 7.3
       <<: *linux-s390x
       env:
+        - *env_s390x
         - CONFIGURE_OPTS="--with-mongodb-client-side-encryption=no"
 
 before_install:
